@@ -2,7 +2,7 @@
 /**
  *  process the cod field in the solimport table
  *
- * @author Klaas Eikelbooml (CiviCooP) <klaas.eikelboom@civicoop.org>
+ * @author Klaas Eikelboom (CiviCooP) <klaas.eikelboom@civicoop.org>
  * @date 20-6-17 11:34
  * @license AGPL-3.0
  *
