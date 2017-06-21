@@ -10,6 +10,7 @@
 class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
 
   private $contactId;
+  private $config;
 
   function process() {
     $cod = $this->_sourceData->cod;
@@ -21,7 +22,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
       return FALSE;
     }
 
-    $config = CRM_SolImport_Config::singleton();
+    $this->config = CRM_SolImport_Config::singleton();
 
     $codes = str_split($cod, 3);
 
@@ -44,7 +45,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
   private function addGroup($code) {
 
     $result = civicrm_api3('GroupContact', 'create', [
-      'group_id' => $config->getGroupId($code),
+      'group_id' => $this->config->getGroupId($code),
       'contact_id' => $this->contactId,
     ]);
     if ($result['is_error']) {
