@@ -62,6 +62,9 @@ abstract class CRM_SolImport_AbstractImport {
     if ($element == 'cod') {
       return TRUE;
     }
+    elseif ($element == 'email') {
+      return TRUE;
+    }
     else {
       return FALSE;
     }
