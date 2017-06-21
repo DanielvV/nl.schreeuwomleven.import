@@ -16,57 +16,38 @@ class CRM_SolImport_Config {
      Deze kunnen later geraadpleegt worden.
   */
 
-  private $_symGroupId;
-
-  private $_sy1GroupId;
-
-  private $_relGroupId;
+  private $_GroupIds;
 
   /**
    * CRM_SolImport_Config constructor.
    */
   public function __construct() {
+    $this->_groupIds['SYM'] = $this->getGroupIdFromName("Sympathisant Frequent");
+    $this->_groupIds['SY1'] = $this->getGroupIdFromName("Sympathisant Jaarlijks");
+    $this->_groupIds['REL'] = $this->getGroupIdFromName("Relatie");
+  }
 
-    /* opzoeken kan uitstekend gedaan worden met de api
-       - getsingle zorgt ervoor dat het om een enkele rij gaat
-       - met return wordt aangegeven welke column uit de api call
-         als resultaat waarde wordt gebruikt
+ /**
+   * @return array
+   */
+  private function getGroupIdFromName($name) {
+    /* opzoeken kan uitstekend gedaan worden met de api^M
+       - getsingle zorgt ervoor dat het om een enkele rij gaat^M
+       - met return wordt aangegeven welke column uit de api call^M
+         als resultaat waarde wordt gebruikt^M
     */
-    $this->_symGroupId = civicrm_api3('Group', 'getsingle', [
-      'return' => ["id"],
-      'title' => "Sympathisant Frequent",
-    ]);
 
-    $this->_sy1GroupId = civicrm_api3('Group', 'getsingle', [
+    return civicrm_api3('Group', 'getsingle', [
       'return' => ["id"],
-      'title' => "Sympathisant Jaarlijks",
-    ]);
-
-    $this->_relGroupId = civicrm_api3('Group', 'getsingle', [
-      'return' => ["id"],
-      'title' => "Relatie",
+      'title' => $name,
     ]);
   }
 
   /**
    * @return array
    */
-  public function getSymGroupId() {
-    return $this->_symGroupId;
-  }
-
-  /**
-   * @return array
-   */
-  public function getSy1GroupId() {
-    return $this->_sy1GroupId;
-  }
-
-  /**
-   * @return array
-   */
-  public function getRelGroupId() {
-    return $this->_relGroupId;
+  public function getGroupId($code) {
+    return $this->_groupIds[$code];
   }
 
   /**
