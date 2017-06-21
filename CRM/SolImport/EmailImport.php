@@ -14,6 +14,10 @@ class CRM_SolImport_EmailImport extends CRM_SolImport_AbstractImport {
   function process() {
     $Emailadressen = $this->_sourceData->Emailadressen;
 
+    if (empty($Emailadressen)) {
+      return TRUE;
+    }
+    
     $this->contactId = $this->searchByExternalId($this->_sourceData->Contactnummer);
 
     if (empty($this->contactId)) {
