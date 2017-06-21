@@ -3,7 +3,7 @@
  *  process the Emailadressen field in the solimport table
  *
  * @author Holland Open Source
- * @date 21-6-17 17:00
+ * @date 21-6-17 17:27
  * @license AGPL-3.0
  *
  */
@@ -32,10 +32,9 @@ class CRM_SolImport_EmailImport extends CRM_SolImport_AbstractImport {
   }
 
   private function addMail($mailadres) {
-
-    $result = civicrm_api3('Contact', 'create', [
-      'id' => $this->contactId,
-      'email[1][email]' => $mailadres,
+    $result = civicrm_api3('Email', 'create', [
+      'contact_id' => $this->contactId,
+      'email' => $mailadres,
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add " . $mailadres . " to " . $this->_sourceData->Contactnummer);
