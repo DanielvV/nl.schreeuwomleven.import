@@ -45,7 +45,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
 
     $result = civicrm_api3('GroupContact', 'create', [
       'group_id' => $config->getGroupId($code),
-      'contact_id' => $contactId,
+      'contact_id' => $this->contactId,
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add " . $code . " code to " . $this->_sourceData->Contactnummer);
@@ -57,7 +57,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
   private function setOptOut($is_opt_out) {
 
     $result = civicrm_api3('Contact', 'create', [
-      'id' => $contactId,
+      'id' => $this->contactId,
       'is_opt_out' => $is_opt_out,
     ]);
 
