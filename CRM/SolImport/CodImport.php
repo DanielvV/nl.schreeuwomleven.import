@@ -26,7 +26,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
     $codes = str_split($cod, 3);
 
     foreach ($codes as $code) {
-      switch ($codes) {
+      switch ($code) {
         case 'SYM':
         case 'SY1':
         case 'REL':
