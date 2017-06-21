@@ -13,10 +13,6 @@ class CRM_SolImport_EmailImport extends CRM_SolImport_AbstractImport {
 
   function process() {
     $Emailadressen = $this->_sourceData->Emailadressen;
-
-    if (empty($Emailadressen)) {
-      return TRUE;
-    }
     
     $this->contactId = $this->searchByExternalId($this->_sourceData->Contactnummer);
 
@@ -29,6 +25,9 @@ class CRM_SolImport_EmailImport extends CRM_SolImport_AbstractImport {
 
     $mailadressen = explode(',', $Emailadressen);
     foreach ($mailadressen as $mailadres) {
+      if (empty($mailadres)) {
+        return TRUE;
+      }
       $this->addMail($mailadres);
     }
 
