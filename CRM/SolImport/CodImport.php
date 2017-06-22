@@ -28,14 +28,12 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
 
     foreach ($codes as $code) {
       switch ($code) {
-        case 'SYM':
-        case 'SY1':
-        case 'REL':
-          $this->addGroup($code);
-          break;
         case 'AGE':
           $this->setOptOut(true);
           break;
+        default:
+          $this->addGroup($code);
+        
       }
     }
 
@@ -44,8 +42,12 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
 
   private function addGroup($code) {
 
+    $groupId = $this->config->getGroupId($code);
+    If (empty($groupId)) {
+      return TRUE;
+    }
     $result = civicrm_api3('GroupContact', 'create', [
-      'group_id' => $this->config->getGroupId($code),
+      'group_id' => $groupId,
       'contact_id' => $this->contactId,
     ]);
     if ($result['is_error']) {

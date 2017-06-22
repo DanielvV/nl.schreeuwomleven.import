@@ -26,6 +26,14 @@ class CRM_SolImport_Config {
     $this->_groupIds['SYM'] = $this->getGroupIdFromName("Sympathisant Frequent");
     $this->_groupIds['SY1'] = $this->getGroupIdFromName("Sympathisant Jaarlijks");
     $this->_groupIds['REL'] = $this->getGroupIdFromName("Relatie");
+    $this->_groupIds['BED'] = $this->getGroupIdFromName("Bedrijf (fondswerving)");
+    $this->_groupIds['BRS'] = $this->getGroupIdFromName("Beurs vrijwilliger");
+    $this->_groupIds['HUB'] = $this->getGroupIdFromName("Hulpverlening Buddy/Counselor");
+    $this->_groupIds['HUO'] = $this->getGroupIdFromName("Hulpverlening Overig");
+    $this->_groupIds['HUL'] = $this->getGroupIdFromName("Hulpverlening");
+    $this->_groupIds['ORD'] = $this->getGroupIdFromName("Bij Mars inzetbaar");
+    $this->_groupIds['PER'] = $this->getGroupIdFromName("Pers Nederland");
+    $this->_groupIds['WAK'] = $this->getGroupIdFromName("Dagwake");
   }
 
  /**
