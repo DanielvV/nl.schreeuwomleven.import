@@ -38,15 +38,15 @@ class CRM_SolImport_AdresvanImport extends CRM_SolImport_AbstractImport {
     return $result['values'][$contactId]['address_id'];
   }
 
-  private function addAddressConnection($adressContactId) {
+  private function addAddressConnection($addressContactId) {
 
     $result = civicrm_api3('Address', 'create', [
       'contact_id' => $this->contactId,
       'id' => getAddressId($this->contactId),
-      'master_id' => getAddressId($adressContactId),
+      'master_id' => getAddressId($addressContactId),
     ]);
     if ($result['is_error']) {
-      $this->_logger->logMessage('E', "unable to add adress connection from " . $adressContactId . " to " . $this->_sourceData->Contactnummer);
+      $this->_logger->logMessage('E', "unable to add address connection from " . $addressContactId . " to " . $this->_sourceData->Contactnummer);
       $this->_logger->logMessage('E', print_r($result, TRUE));
       return FALSE;
     }
