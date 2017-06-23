@@ -65,6 +65,9 @@ abstract class CRM_SolImport_AbstractImport {
     elseif ($element == 'email') {
       return TRUE;
     }
+    elseif ($element == 'addressvan') {
+      return TRUE;
+    }
     else {
       return FALSE;
     }
