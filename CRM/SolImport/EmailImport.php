@@ -37,6 +37,7 @@ class CRM_SolImport_EmailImport extends CRM_SolImport_AbstractImport {
     $result = civicrm_api3('Email', 'create', [
       'contact_id' => $this->contactId,
       'email' => $mailadres,
+      'is_bulkmail' => 1,
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add " . $mailadres . " to " . $this->_sourceData->Contactnummer);
