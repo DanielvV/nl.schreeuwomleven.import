@@ -21,8 +21,6 @@ class CRM_SolImport_EmailImport extends CRM_SolImport_AbstractImport {
       return FALSE;
     }
 
-    $config = CRM_SolImport_Config::singleton();
-
     $mailadressen = explode(',', $Emailadressen);
     foreach ($mailadressen as $mailadres) {
       if (empty($mailadres)) {
@@ -35,6 +33,7 @@ class CRM_SolImport_EmailImport extends CRM_SolImport_AbstractImport {
   }
 
   private function addMail($mailadres) {
+
     $result = civicrm_api3('Email', 'create', [
       'contact_id' => $this->contactId,
       'email' => $mailadres,
