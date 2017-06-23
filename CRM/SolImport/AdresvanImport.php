@@ -46,7 +46,6 @@ class CRM_SolImport_AdresvanImport extends CRM_SolImport_AbstractImport {
     return $result['values'][$contactId]['address_id'];
   }
 
-
   private function addAddressConnection($addressMasterContactId) {
 
     $result = civicrm_api3('Address', 'create', [
