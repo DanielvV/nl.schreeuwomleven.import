@@ -14,7 +14,7 @@ class CRM_SolImport_AdresvanImport extends CRM_SolImport_AbstractImport {
   function process() {
     $Adresvan = $this->_sourceData->Adresvan;
     
-    $this->contactId = $this->searchByExternalId($this->_sourceData->Contactnummer);
+    $this->contactId = $this->_sourceData->Contactnummer;
 
     if (empty($this->contactId)) {
       $this->_logger->logMessage('E', "could not identify a contact for " . $this->_sourceData->Contactnummer);
