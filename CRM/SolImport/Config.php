@@ -23,17 +23,33 @@ class CRM_SolImport_Config {
    */
   public function __construct() {
 
-    $this->_groupIds['SYM'] = $this->getGroupIdFromName("Sympathisant Frequent");
-    $this->_groupIds['SY1'] = $this->getGroupIdFromName("Sympathisant Jaarlijks");
-    $this->_groupIds['REL'] = $this->getGroupIdFromName("Relatie");
-    $this->_groupIds['BED'] = $this->getGroupIdFromName("Bedrijf (fondswerving)");
-    $this->_groupIds['BRS'] = $this->getGroupIdFromName("Beurs vrijwilliger");
-    $this->_groupIds['HUB'] = $this->getGroupIdFromName("Hulpverlening Buddy/Counselor");
-    $this->_groupIds['HUO'] = $this->getGroupIdFromName("Hulpverlening Overig");
-    $this->_groupIds['HUL'] = $this->getGroupIdFromName("Hulpverlening");
-    $this->_groupIds['ORD'] = $this->getGroupIdFromName("Bij Mars inzetbaar");
-    $this->_groupIds['PER'] = $this->getGroupIdFromName("Pers Nederland");
-    $this->_groupIds['WAK'] = $this->getGroupIdFromName("Dagwake");
+    $this->_groupIds['BRS'] = $this->getGroupIdFromName("Beursmedewerkers");
+    $this->_groupIds['ORD'] = $this->getGroupIdFromName("Marsmedewerkers (ordedienst en ehbo)");
+    $this->_groupIds['WAK'] = $this->getGroupIdFromName("Wakers");
+
+    $this->_groupIds['HUL'] = $this->getGroupIdFromName("Hulpverleners");
+    $this->_groupIds['HUB'] = $this->getGroupIdFromName("Buddy's en Counselors");
+    $this->_groupIds['HUO'] = $this->getGroupIdFromName("Speciale relaties hulpverlening");
+
+    $this->_groupIds['SYE'] = $this->getGroupIdFromName("Leef per email (6x per jaar)");
+    $this->_groupIds['SSE'] = $this->getGroupIdFromName("Leef per email (6x per jaar)");
+    $this->_groupIds['SYH'] = $this->getGroupIdFromName("Leef per email (6x per jaar)");
+    $this->_groupIds['SYM'] = $this->getGroupIdFromName("Leef per post (6x per jaar)");
+    $this->_groupIds['SY1'] = $this->getGroupIdFromName("Leef per post (1x per jaar)");
+    $this->_groupIds['SYA'] = $this->getGroupIdFromName("Leef per post (1x per jaar)");
+
+    $this->_groupIds['ART'] = $this->getGroupIdFromName("Artsen");
+    $this->_groupIds['BED'] = $this->getGroupIdFromName("Bedrijven");
+    $this->_groupIds['PRM'] = $this->getGroupIdFromName("Buitenlanders")
+    $this->_groupIds['CRE'] = $this->getGroupIdFromName("Crediteuren");
+    $this->_groupIds['KER'] = $this->getGroupIdFromName("Kerken");
+    $this->_groupIds['KDI'] = $this->getGroupIdFromName("Kerken");
+    $this->_groupIds['KOR'] = $this->getGroupIdFromName("Kerken");
+    $this->_groupIds['KVG'] = $this->getGroupIdFromName("Kerken");
+    $this->_groupIds['REL'] = $this->getGroupIdFromName("Nederlanders");
+    $this->_groupIds['PER'] = $this->getGroupIdFromName("Pers");
+    $this->_groupIds['TST'] = $this->getGroupIdFromName("Testadressen");
+    $this->_groupIds['ZAK'] = $this->getGroupIdFromName("Zakelijke adressen");
   }
 
  /**
