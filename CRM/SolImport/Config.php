@@ -73,7 +73,7 @@ class CRM_SolImport_Config {
    * @return array
    */
   public function getGroupId($code) {
-    return $this->_groupIds[$code];
+    return $this->_groupIds[$code]["id"];
   }
 
   /**
