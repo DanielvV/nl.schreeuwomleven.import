@@ -65,7 +65,7 @@ class CRM_SolImport_Config {
 
     return civicrm_api3('Group', 'getsingle', [
       'return' => ["id"],
-      'title' => "$name",
+      'title' => $name,
     ]);
   }
 
