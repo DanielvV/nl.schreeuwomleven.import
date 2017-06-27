@@ -40,7 +40,7 @@ class CRM_SolImport_Config {
 
     $this->_groupIds['ART'] = $this->getGroupIdFromName("Artsen");
     $this->_groupIds['BED'] = $this->getGroupIdFromName("Bedrijven");
-    $this->_groupIds['PRM'] = $this->getGroupIdFromName("Buitenlanders")
+    $this->_groupIds['PRM'] = $this->getGroupIdFromName("Buitenlanders");
     $this->_groupIds['CRE'] = $this->getGroupIdFromName("Crediteuren");
     $this->_groupIds['KER'] = $this->getGroupIdFromName("Kerken");
     $this->_groupIds['KDI'] = $this->getGroupIdFromName("Kerken");
