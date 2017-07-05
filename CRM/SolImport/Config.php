@@ -31,9 +31,9 @@ class CRM_SolImport_Config {
     $this->_groupIds['HUB'] = $this->getGroupIdFromName("Buddy's en Counselors");
     $this->_groupIds['HUO'] = $this->getGroupIdFromName("Speciale relaties hulpverlening");
 
-    $this->_groupIds['SYE'] = $this->getGroupIdFromName("Leef per email (6x per jaar)");
-    $this->_groupIds['SSE'] = $this->getGroupIdFromName("Leef per email (6x per jaar)");
-    $this->_groupIds['SYH'] = $this->getGroupIdFromName("Leef per email (6x per jaar)");
+    $this->_groupIds['SYE'] = $this->getGroupIdFromName("Leef digitaal (6x per jaar)");
+    $this->_groupIds['SSE'] = $this->getGroupIdFromName("Leef digitaal (6x per jaar)");
+    $this->_groupIds['SYH'] = $this->getGroupIdFromName("Leef digitaal (6x per jaar)");
     $this->_groupIds['SYM'] = $this->getGroupIdFromName("Leef per post (6x per jaar)");
     $this->_groupIds['SY1'] = $this->getGroupIdFromName("Leef per post (1x per jaar)");
     $this->_groupIds['SYA'] = $this->getGroupIdFromName("Leef per post (1x per jaar)");
