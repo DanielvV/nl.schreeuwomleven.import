@@ -52,9 +52,23 @@ function civicrm_api3_sol_import_Incasso($params) {
    *  mocht de select geen resultaat opleveren meldt dit ook
    */
   if (empty($daoSource->N)) {
-    $returnValues[] = 'Nothing to import - alle incasso adresses are done';
+    $returnValues[] = 'Nothing to import - all incasso rows are done';
   } else {
     $returnValues[] = $createCount.' rows import to CiviCRM, '.$logCount.' with logged errors that were not imported';
+    /*
+     *  doe nog wat extra
+     */
+    $daoOptionValue = CRM_Core_DAO::executeQuery("SELECT value FROM `civicrm_option_value` WHERE name = 'OOFF'", array());
+    $daoOptionValue->fetch();
+    // Voor elk record in civicrm_contribution waar civicrm_contribution.payment_instrument_id = OOFF
+    $extraDaoSource = CRM_Core_DAO::executeQuery("SELECT id, contact_id FROM `civicrm_contribution` WHERE payment_instrument_id = %1 ORDER BY id", array(
+      1 => array($daoOptionValue->value,'Integer')
+    ));
+    while ($extraDaoSource->fetch()) {
+      // -> Maak een mandaat aan
+      $extraIncassoImport = new CRM_SolImport_IncassoImport($element, $daoSource, $logger);
+      $result = $incassoImport->processOneOff();
+    }
   }
   // deze api vind zichtzelf altijd succesvol
   // dat kan omdat hij zijn fouten kwijtkan in de log file

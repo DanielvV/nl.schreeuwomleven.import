@@ -14,7 +14,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
 
   function process() {
     $source = $this->_sourceData;
-    
+
     $this->contactId = $this->searchByExternalId($this->_sourceData->contact_id);
 
     if (empty($this->contactId)) {
@@ -25,7 +25,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
     $this->createRecur($source);
     $this->getRecurId($source);
     $this->createMandate($this->recurId);
-    
+
     $result = civicrm_api3('Contribution', 'get', [
       'return' => ["payment_instrument_id"],
       'contact_id' => $this->contactId,
@@ -48,6 +48,13 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       }
     }
 
+    return TRUE;
+  }
+
+  function processOneOff {
+    $source = $this->_sourceData;
+    
+    $this->createMandate($source->id, $source->contactid, 'civicrm_contribution', 'OOFF');
 
     return TRUE;
   }
@@ -89,13 +96,13 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
     $this->recurId = $result['id'];
   }
 
-  private function createMandate($recurId) {
+  private function createMandate($entity_id, $contact_id = $this->contactId, $entityTable = "civicrm_contribution_recur", $type = "RCUR") {
 
     $result = civicrm_api3('SepaMandate', 'create', [
-      'entity_table' => "civicrm_contribution_recur",
-      'entity_id' => $recurId,
-      'type' => "RCUR",
-      'contact_id' => $this->contactId,
+      'entity_table' => $entityTable,
+      'entity_id' => $entity_id,
+      'type' => $type,
+      'contact_id' => $contact_id,
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add mandate from recurring contribution " . $recurId . " to " . $this->_sourceData->contact_id);
