@@ -1,5 +1,5 @@
 create table sol_import_incasso(
-  id                    int(11) NOT NULL PRIMARY KEY ,
+  id                    INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   status                varchar(1)  DEFAULT 'N' ,
   financial_type_id     varchar(40)  ,
   contact_id            varchar(14)  ,
