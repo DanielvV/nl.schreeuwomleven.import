@@ -7,5 +7,5 @@ create table sol_import_incasso(
   amount                int(11)      ,
   start_date            date         ,
   next_sched_contribution_date  varchar(8) ,
-  note                  varchar(50)  ,
+  note                  varchar(50)
 )
