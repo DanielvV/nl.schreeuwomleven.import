@@ -3,7 +3,7 @@
  *  process the solimportincasso table
  *
  * @author Holland Open Source
- * @date 1-8-17 11:37
+ * @date 1-8-17 13:26
  * @license AGPL-3.0
  *
  */
