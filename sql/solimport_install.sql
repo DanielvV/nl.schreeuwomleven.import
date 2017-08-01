@@ -49,7 +49,7 @@ create table sol_import(
   bic5                  varchar(255) ,
   naam5                 varchar(255) ,
   plaats5               varchar(255)
-)
+),
 create table sol_import_incasso(
   id                    int(11) NOT NULL PRIMARY KEY ,
   status                varchar(1)  DEFAULT 'N' ,
