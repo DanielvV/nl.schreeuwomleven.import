@@ -67,7 +67,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'financial_type_id' => $source->financial_type_id,
       'amount' => $source->amount,
       'payment_instrument_id' => $source->payment_instrument_id,
-      'frequency_unit' => $source->frequency_unit,
+      'frequency_unit' => 'month',
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add recurring contribution to " . $this->_sourceData->contact_id);
@@ -85,7 +85,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'financial_type_id' => $source->financial_type_id,
       'amount' => $source->amount,
       'payment_instrument_id' => $source->payment_instrument_id,
-      'frequency_unit' => $source->frequency_unit,
+      'frequency_unit' => 'month',
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to get created recurring contribution from " . $this->_sourceData->contact_id);
