@@ -6,6 +6,6 @@ create table sol_import_incasso(
   frequency_interval    int(11)      ,
   amount                int(11)      ,
   start_date            date         ,
-  next_sched_contribution_date  varchar(8) ,
+  next_sched_contribution_date  date ,
   note                  varchar(50)
 )
