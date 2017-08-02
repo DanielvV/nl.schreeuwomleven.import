@@ -16,3 +16,5 @@ kan met drush
 Het aantal te verwerken rijen is normaal 1000, maar kan aangepast worden met de limit parameter:
 
     drush cvapi SolImport.cod limit=21
+
+Naast cod zijn de volgende api functies beschikbaar: adresvan, email, incasso
