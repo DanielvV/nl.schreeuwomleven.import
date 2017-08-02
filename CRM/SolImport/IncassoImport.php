@@ -40,7 +40,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
         'entity_id' => $contributionId,
       ]);
 
-      if ( $contribution['payment_instrument'] = "SEPA DD One-off Transaction" || $contribution['payment_instrument'] = "SEPA DD Recurring Transaction" || $result['values'][$result['id']]['note'] = $source->note ) {
+      if ( $contribution['payment_instrument'] = "SEPA DD One-off Transaction" || $result['values'][$result['id']]['note'] = $source->note ) {
         $result = civicrm_api3('Contribution', 'create', [
           'id' => $contributionId,
           'payment_instrument_id' => "RCUR",
