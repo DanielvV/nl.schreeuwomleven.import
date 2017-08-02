@@ -41,22 +41,22 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       ]);
 
       if ( $contribution['payment_instrument'] = "SEPA DD One-off Transaction" || $result['values'][$result['id']]['note'] = $source->note ) {
-        $result = civicrm_api3('Payment', 'get', array(
+        $oldpayment = civicrm_api3('Payment', 'get', [
           'contribution_id' => $contributionId,
-        ));
-        foreach ($result['values'] as $paymentId => $payment) {
-          $result = civicrm_api3('Payment', 'delete', array(
-            'id' => $paymentId,
-          ));
-        }
-        //$result = civicrm_api3('Payment', 'delete', array(
-        //  'id' => $result['id'],
-        //));
+        ]);
         $result = civicrm_api3('Contribution', 'create', [
           'id' => $contributionId,
           'payment_instrument_id' => "RCUR",
           'contribution_recur_id' => $this->recurId,
         ]);
+        //$result = civicrm_api3('Payment', 'delete', [
+        //  'id' => $oldpayment['id'],
+        //]);
+        foreach ($oldpayment['values'] as $paymentId => $payment) {
+          $result = civicrm_api3('Payment', 'delete', [
+            'id' => $paymentId,
+          ]);
+        }
       }
     }
 
