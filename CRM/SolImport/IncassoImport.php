@@ -24,7 +24,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
 
     $this->createRecur($source);
     $this->getRecurId($source);
-    $this->createMandate($this->recurId, $source->iban, $source->DtOfSgntr, $this->contactId);
+    $this->createMandateRcur($source);
 
     $result = civicrm_api3('Contribution', 'get', [
       'return' => ["payment_instrument_id"],
@@ -40,7 +40,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
         'entity_id' => $contributionId,
       ]);
 
-      if ( $contribution['payment_instrument'] = "SEPA DD One-off Transaction" || $result['values'][$result['id']]['note'] = $source->note ) {
+      if ( $contribution['payment_instrument'] = "SEPA DD One-off Transaction" || $contribution['payment_instrument'] = "SEPA DD Recurring Transaction" || $result['values'][$result['id']]['note'] = $source->note ) {
         $result = civicrm_api3('Contribution', 'create', [
           'id' => $contributionId,
           'payment_instrument_id' => "RCUR",
@@ -55,7 +55,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
   function processOneOff() {
     $source = $this->_sourceData;
     
-    $this->createMandate($source->id, NULL, date("Y-m-d H:i:s"), $source->contactid, 'civicrm_contribution', 'OOFF');
+    $this->createMandateOoff($source);
 
     return TRUE;
   }
@@ -99,15 +99,15 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
     $this->recurId = $result['id'];
   }
 
-  private function createMandate($entity_id, $iban, $date, $contact_id, $entityTable = "civicrm_contribution_recur", $type = "RCUR") {
-
+  private function createMandateRcur($source) {
     $result = civicrm_api3('SepaMandate', 'create', [
-      'entity_table' => $entityTable,
-      'entity_id' => $entity_id,
-      'type' => $type,
-      'contact_id' => $contact_id,
-      'iban' => $iban,
-      'date' => $date,
+      'reference' => $source->MndtId,
+      'entity_table' => "civicrm_contribution_recur",
+      'entity_id' => $this->recurId,
+      'type' => "RCUR",
+      'contact_id' => $this->contactId,
+      'iban' => $source->iban,
+      'date' => $source->DtOfSgntr,
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add mandate from recurring contribution " . $recurId . " to " . $this->_sourceData->contact_id);
@@ -116,4 +116,18 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
     }
   }
 
+  private function createMandateOoff($source) {
+
+    $result = civicrm_api3('SepaMandate', 'create', [
+      'entity_table' => 'civicrm_contribution_',
+      'entity_id' => $source->id,
+      'type' => 'OOFF',
+      'contact_id' => $source->contact_id,
+    ]);
+    if ($result['is_error']) {
+      $this->_logger->logMessage('E', "unable to add mandate from recurring contribution " . $recurId . " to " . $this->_sourceData->contact_id);
+      $this->_logger->logMessage('E', print_r($result, TRUE));
+      return FALSE;
+    }
+  }
 }
