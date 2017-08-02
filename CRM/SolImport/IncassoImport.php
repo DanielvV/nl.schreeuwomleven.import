@@ -24,7 +24,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
 
     $this->createRecur($source);
     $this->getRecurId($source);
-    $this->createMandate($this->recurId, $source->iban, $source->DtOfSgntr);
+    $this->createMandate($this->recurId, $source->iban, $source->DtOfSgntr, $this->contactId);
 
     $result = civicrm_api3('Contribution', 'get', [
       'return' => ["payment_instrument_id"],
@@ -52,7 +52,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
     return TRUE;
   }
 
-  function processOneOff {
+  function processOneOff() {
     $source = $this->_sourceData;
     
     $this->createMandate($source->id, NULL, date("Y-m-d H:i:s"), $source->contactid, 'civicrm_contribution', 'OOFF');
@@ -99,7 +99,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
     $this->recurId = $result['id'];
   }
 
-  private function createMandate($entity_id, $iban, $date, $contact_id = $this->contactId, $entityTable = "civicrm_contribution_recur", $type = "RCUR") {
+  private function createMandate($entity_id, $iban, $date, $contact_id, $entityTable = "civicrm_contribution_recur", $type = "RCUR") {
 
     $result = civicrm_api3('SepaMandate', 'create', [
       'entity_table' => $entityTable,
