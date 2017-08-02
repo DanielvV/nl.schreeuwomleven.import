@@ -24,7 +24,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
 
     $this->createRecur($source);
     $this->getRecurId($source);
-    $this->createMandate($this->recurId);
+    $this->createMandate($this->recurId, $source->iban, $source->DtOfSgntr);
 
     $result = civicrm_api3('Contribution', 'get', [
       'return' => ["payment_instrument_id"],
@@ -44,6 +44,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
         $result = civicrm_api3('Contribution', 'create', [
           'id' => $contributionId,
           'payment_instrument_id' => "RCUR",
+          'contribution_recur_id' => $this->recurId,
         ]);
       }
     }
@@ -54,7 +55,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
   function processOneOff {
     $source = $this->_sourceData;
     
-    $this->createMandate($source->id, $source->contactid, 'civicrm_contribution', 'OOFF');
+    $this->createMandate($source->id, NULL, date("Y-m-d H:i:s"), $source->contactid, 'civicrm_contribution', 'OOFF');
 
     return TRUE;
   }
@@ -68,6 +69,8 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'amount' => $source->amount,
       'payment_instrument_id' => $source->payment_instrument_id,
       'frequency_unit' => 'month',
+      'start_date' => $source->start_date,
+      'create_date' => $source->DtOfSgntr,
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add recurring contribution to " . $this->_sourceData->contact_id);
@@ -96,13 +99,15 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
     $this->recurId = $result['id'];
   }
 
-  private function createMandate($entity_id, $contact_id = $this->contactId, $entityTable = "civicrm_contribution_recur", $type = "RCUR") {
+  private function createMandate($entity_id, $iban, $date, $contact_id = $this->contactId, $entityTable = "civicrm_contribution_recur", $type = "RCUR") {
 
     $result = civicrm_api3('SepaMandate', 'create', [
       'entity_table' => $entityTable,
       'entity_id' => $entity_id,
       'type' => $type,
       'contact_id' => $contact_id,
+      'iban' => $iban,
+      'date' => $date,
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add mandate from recurring contribution " . $recurId . " to " . $this->_sourceData->contact_id);

@@ -5,7 +5,7 @@ create table sol_import_incasso(
   contact_id            varchar(14)  ,
   frequency_interval    int(11)      ,
   amount                int(11)      ,
-  create_date           date         ,
+  start_date            date         ,
   DtOfSgntr             date         ,
   MndtId                varchar(40)  ,
   next_sched_contribution_date  date ,
