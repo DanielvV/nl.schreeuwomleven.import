@@ -49,14 +49,18 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
           'payment_instrument_id' => "RCUR",
           'contribution_recur_id' => $this->recurId,
         ]);
-        //$result = civicrm_api3('Payment', 'delete', [
-        //  'id' => $oldpayment['id'],
-        //]);
         foreach ($oldpayment['values'] as $paymentId => $payment) {
           $result = civicrm_api3('Payment', 'delete', [
             'id' => $paymentId,
           ]);
         }
+        $result = civicrm_api3('Payment', 'get', [
+          'contribution_id' => $contributionId,
+        ]);
+        $result = civicrm_api3('Payment', 'create', [
+          'id' => $result['id'],
+          'trxn_date' => $oldpayment['values'][$paymentId]['trxn_date'],
+        ]);
       }
     }
 
