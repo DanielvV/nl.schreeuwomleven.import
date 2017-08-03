@@ -99,18 +99,17 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         // Alle e-mailadressen verwijderen bij contact
           $this->mailToNote('Retour van');
           break;
-        case 'AGP':
-        case 'OPA':
-        // Niet in groepen Leef per post (6x per jaar) en Leef per post (1x per jaar)
-          $this->removeGroup('SYM');
-          $this->removeGroup('SY1');
-          break;
         case 'ADU':
         // Niet in groepen Leef per post (6x per jaar) en Leef per post (1x per jaar)
         // Niet in groepen Leef per e-mail (6x per jaar)
           $this->removeGroup('SYM');
           $this->removeGroup('SY1');
           $this->removeGroup('SYE');
+          break;
+        case 'AGP':
+        // Niet in groepen Leef per post (6x per jaar) en Leef per post (1x per jaar)
+          $this->removeGroup('SYM');
+          $this->removeGroup('SY1');
           break;
         case 'AON':
         // Alle postadressen verwijderen bij contact
