@@ -113,7 +113,8 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
           $this->removeGroup('SYE');
           break;
         case 'AON':
-        // Locatietype Retour (is lastig met export?)
+        // Alle postadressen verwijderen bij contact
+          $this->addressToNote('Onbekend adres');
           break;
         case 'AOV':
         // Overleden
@@ -200,13 +201,39 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
     }
 
     foreach ($result['values'] as $mailId => $mail) {
-      $this->addNote($mail[email], $subject);
+      $this->addNote($mail['email'], $subject);
 
       $result = civicrm_api3('Email', 'delete', [
         'id' => $mailId,
       ]);
       if ($result['is_error']) {
         $this->_logger->logMessage('E', "unable to delete e-mailaddress from " . $this->_sourceData->Contactnummer);
+        $this->_logger->logMessage('E', print_r($result, TRUE));
+        return FALSE;
+      }
+    }
+  }
+
+  private function addressToNote($subject) {
+  // remove address and add it to a note
+
+    $result = civicrm_api3('Address', 'get', [
+      'contact_id' => $this->contactId,
+    ]);
+    if ($result['is_error']) {
+      $this->_logger->logMessage('E', "unable get an address from " . $this->_sourceData->Contactnummer);
+      $this->_logger->logMessage('E', print_r($result, TRUE));
+      return FALSE;
+    }
+
+    foreach ($result['values'] as $addressId => $address) {
+      $this->addNote($address['street_address'] . ', ' . $address['postal_code'] . '  ' . $address['city'], $subject);
+
+      $result = civicrm_api3('Address', 'delete', [
+        'id' => $addressId,
+      ]);
+      if ($result['is_error']) {
+        $this->_logger->logMessage('E', "unable to delete address from " . $this->_sourceData->Contactnummer);
         $this->_logger->logMessage('E', print_r($result, TRUE));
         return FALSE;
       }
