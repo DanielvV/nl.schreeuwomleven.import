@@ -91,8 +91,9 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
     foreach ($codes as $code) {
       switch ($code) {
         case 'AGE':
-        // Vinkje bij Opt Out bulk e-mail
-          $this->setOptOut(true);
+        // Niet in groepen Leef per e-mail (6x per jaar)
+          $this->removeGroup('SY1');
+          $this->mailToNote('Geen e-mail naar');
           break;
         case 'AOE':
         // Alle e-mailadressen verwijderen bij contact
@@ -137,22 +138,6 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
     }
   }
 
-  private function addNote($note, $subject) {
-  // add note to existing contact
-
-    $result = civicrm_api3('Note', 'create', array(
-      'entity_table' => "civicrm_contact",
-      'entity_id' => $this->contactId,
-      'note' => $note,
-      'subject' => $subject,
-    ));
-    if ($result['is_error']) {
-      $this->_logger->logMessage('E', "unable to add note to " . $this->_sourceData->Contactnummer);
-      $this->_logger->logMessage('E', print_r($result, TRUE));
-      return FALSE;
-    }
-  }
-
   private function removeGroup($code) {
   // set corresponding group status to Removed if the code exists in the config and the group exists on the contact
 
@@ -181,18 +166,46 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
     }
   }
 
-  private function setOptOut($is_opt_out) {
+  private function addNote($note, $subject) {
+  // add note to existing contact
 
-    $result = civicrm_api3('Contact', 'create', [
-      'id' => $this->contactId,
-      'is_opt_out' => $is_opt_out,
-    ]);
-
+    $result = civicrm_api3('Note', 'create', array(
+      'entity_table' => "civicrm_contact",
+      'entity_id' => $this->contactId,
+      'note' => $note,
+      'subject' => $subject,
+    ));
     if ($result['is_error']) {
-      $this->_logger->logMessage('E', "unable add opt out code to " . $this->_sourceData->Contactnummer);
+      $this->_logger->logMessage('E', "unable to add note to " . $this->_sourceData->Contactnummer);
       $this->_logger->logMessage('E', print_r($result, TRUE));
       return FALSE;
-    }  
+    }
+  }
+
+  private function mailToNote($subject) {
+  // remove e-mail and add it to a note
+
+    $result = civicrm_api3('Email', 'get', array(
+      'contact_id' => $this->contactId,
+    ));
+    if ($result['is_error']) {
+      $this->_logger->logMessage('E', "unable get an e-mailaddress from " . $this->_sourceData->Contactnummer);
+      $this->_logger->logMessage('E', print_r($result, TRUE));
+      return FALSE;
+    }
+
+    foreach ($result['values'] as $mailId => $mail) {
+      $this->addNote($mail[email], $subject);
+
+      $result = civicrm_api3('Email', 'delete', [
+        'id' => $mailId,
+      ]);
+      if ($result['is_error']) {
+        $this->_logger->logMessage('E', "unable to delete e-mailaddress from " . $this->_sourceData->Contactnummer);
+        $this->_logger->logMessage('E', print_r($result, TRUE));
+        return FALSE;
+      }
+    }
   }
 
 }
