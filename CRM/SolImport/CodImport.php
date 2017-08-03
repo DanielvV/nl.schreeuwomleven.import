@@ -37,11 +37,6 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
           $this->addGroup('SYM');
           $this->addGroup('SYE');
           break;
-        case 'KDI':
-          break;
-        case 'K09':
-        case 'K12':
-          break;
         case 'K00':
         case 'K01':
         case 'K02':
@@ -51,8 +46,10 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         case 'K06':
         case 'K07':
         case 'K08':
+        case 'K09':
         case 'K10':
         case 'K11':
+        case 'K12':
         case 'K13':
         case 'K14':
         case 'K15':
@@ -67,6 +64,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         case 'K24':
         case 'K25':
         case 'K26':
+          $this->addNote($code, 'Kerkelijke richting');
           break;
       }
     }
@@ -139,6 +137,22 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
     }
   }
 
+  private function addNote($note, $subject) {
+  // add note to existing contact
+
+    $result = civicrm_api3('Note', 'create', array(
+      'entity_table' => "civicrm_contact",
+      'entity_id' => $this->contactId,
+      'note' => $note,
+      'subject' => $subject,
+    ));
+    if ($result['is_error']) {
+      $this->_logger->logMessage('E', "unable to add note to " . $this->_sourceData->Contactnummer);
+      $this->_logger->logMessage('E', print_r($result, TRUE));
+      return FALSE;
+    }
+  }
+
   private function removeGroup($code) {
   // set corresponding group status to Removed if the code exists in the config and the group exists on the contact
 
@@ -175,7 +189,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
     ]);
 
     if ($result['is_error']) {
-      $this->_logger->logMessage('E', "unable add opt out code to  $this->_sourceData->Contactnummer");
+      $this->_logger->logMessage('E', "unable add opt out code to " . $this->_sourceData->Contactnummer);
       $this->_logger->logMessage('E', print_r($result, TRUE));
       return FALSE;
     }  
