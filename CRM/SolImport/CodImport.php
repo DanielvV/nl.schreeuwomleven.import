@@ -92,7 +92,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
       switch ($code) {
         case 'AGE':
         // Niet in groepen Leef per e-mail (6x per jaar)
-          $this->removeGroup('SY1');
+          $this->removeGroup('SYE');
           $this->mailToNote('Geen e-mail naar');
           break;
         case 'AOE':
