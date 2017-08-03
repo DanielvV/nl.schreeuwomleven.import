@@ -115,6 +115,10 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         case 'AON':
         // Locatietype Retour (is lastig met export?)
           break;
+        case 'AOV':
+        // Overleden
+          $this->setDeceased(true);
+          break;
       }
     }
 
@@ -207,6 +211,21 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         return FALSE;
       }
     }
+  }
+
+  private function setDeceased($is_deceased) {
+  // people die
+
+    $result = civicrm_api3('Contact', 'create', [
+      'id' => $this->contactId,
+      'is_deceased' => $is_deceased,
+    ]);
+
+    if ($result['is_error']) {
+      $this->_logger->logMessage('E', "unable change is_deceased to " . $is_deceased . " for " . $this->_sourceData->Contactnummer);
+      $this->_logger->logMessage('E', print_r($result, TRUE));
+      return FALSE;
+    }  
   }
 
 }
