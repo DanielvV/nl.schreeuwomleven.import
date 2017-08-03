@@ -97,6 +97,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
           break;
         case 'AOE':
         // Alle e-mailadressen verwijderen bij contact
+          $this->mailToNote('Retour van');
           break;
         case 'AGP':
         case 'OPA':
@@ -169,12 +170,12 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
   private function addNote($note, $subject) {
   // add note to existing contact
 
-    $result = civicrm_api3('Note', 'create', array(
+    $result = civicrm_api3('Note', 'create', [
       'entity_table' => "civicrm_contact",
       'entity_id' => $this->contactId,
       'note' => $note,
       'subject' => $subject,
-    ));
+    ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add note to " . $this->_sourceData->Contactnummer);
       $this->_logger->logMessage('E', print_r($result, TRUE));
@@ -185,9 +186,9 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
   private function mailToNote($subject) {
   // remove e-mail and add it to a note
 
-    $result = civicrm_api3('Email', 'get', array(
+    $result = civicrm_api3('Email', 'get', [
       'contact_id' => $this->contactId,
-    ));
+    ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable get an e-mailaddress from " . $this->_sourceData->Contactnummer);
       $this->_logger->logMessage('E', print_r($result, TRUE));
