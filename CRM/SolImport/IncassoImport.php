@@ -57,10 +57,12 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
         $result = civicrm_api3('Payment', 'get', [
           'contribution_id' => $contributionId,
         ]);
-        $result = civicrm_api3('Payment', 'create', [
-          'id' => $result['id'],
-          'trxn_date' => $oldpayment['values'][$paymentId]['trxn_date'],
-        ]);
+        if (!empty($result['id'])) {
+          $result = civicrm_api3('Payment', 'create', [
+            'id' => $result['id'],
+            'trxn_date' => $oldpayment['values'][$paymentId]['trxn_date'],
+          ]);
+        }
       }
     }
 
@@ -82,7 +84,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'frequency_interval' => $source->frequency_interval,
       'financial_type_id' => $source->financial_type_id,
       'amount' => $source->amount,
-      'payment_instrument_id' => $source->payment_instrument_id,
+      'payment_instrument_id' => "RCUR",
       'frequency_unit' => 'month',
       'start_date' => $source->start_date,
       'create_date' => $source->DtOfSgntr,
@@ -102,7 +104,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'frequency_interval' => $source->frequency_interval,
       'financial_type_id' => $source->financial_type_id,
       'amount' => $source->amount,
-      'payment_instrument_id' => $source->payment_instrument_id,
+      'payment_instrument_id' => "RCUR",
       'frequency_unit' => 'month',
     ]);
     if ($result['is_error']) {
