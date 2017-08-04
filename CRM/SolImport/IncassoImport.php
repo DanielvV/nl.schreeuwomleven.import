@@ -106,6 +106,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'amount' => $source->amount,
       'payment_instrument_id' => "RCUR",
       'frequency_unit' => 'month',
+      'options' => array('limit' => 1),
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to get created recurring contribution from " . $this->_sourceData->contact_id);
