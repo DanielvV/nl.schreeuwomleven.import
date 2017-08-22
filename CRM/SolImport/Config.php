@@ -35,8 +35,8 @@ class CRM_SolImport_Config {
     $this->_groupIds['SSE'] = $this->getGroupIdFromName("Leef digitaal (6x per jaar)");
     $this->_groupIds['SYH'] = $this->getGroupIdFromName("Leef digitaal (6x per jaar)");
     $this->_groupIds['SYM'] = $this->getGroupIdFromName("Leef per post (6x per jaar)");
-    $this->_groupIds['SY1'] = $this->getGroupIdFromName("Leef per post (1x per jaar)");
-    $this->_groupIds['SYA'] = $this->getGroupIdFromName("Leef per post (1x per jaar)");
+    $this->_groupIds['SY1'] = $this->getGroupIdFromName("  Leef per post (1x per jaar)");
+    $this->_groupIds['SYA'] = $this->getGroupIdFromName("  Leef per post (1x per jaar)");
 
     $this->_groupIds['ART'] = $this->getGroupIdFromName("Artsen");
     $this->_groupIds['BED'] = $this->getGroupIdFromName("Bedrijven");
@@ -65,7 +65,7 @@ class CRM_SolImport_Config {
 
     return civicrm_api3('Group', 'getsingle', [
       'return' => ["id"],
-      'title' => $name,
+      'title' => "$name",
     ]);
   }
 
