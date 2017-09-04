@@ -72,6 +72,9 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
     foreach ($codes as $code) {
       switch ($code) {
         case 'SYM':
+        case 'KDI':
+        case 'KER':
+        case 'KOR':
           $this->addGroup('SYE');
           break 2;
         case 'SY1':
@@ -118,6 +121,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         case 'AOV':
         // Overleden
           $this->setDeceased(true);
+          $this->mailToNote('Overleden');
           break;
       }
     }
