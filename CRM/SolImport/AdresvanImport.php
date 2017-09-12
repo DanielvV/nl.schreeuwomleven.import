@@ -50,7 +50,7 @@ class CRM_SolImport_AdresvanImport extends CRM_SolImport_AbstractImport {
 
     $result = civicrm_api3('Address', 'create', [
       'contact_id' => $this->contactId,
-      'location_type_id' => 1,
+      'location_type_id' => 0,
       'id' => $this->getAddressId($this->contactId),
       'master_id' => $this->getAddressId($addressMasterContactId),
     ]);

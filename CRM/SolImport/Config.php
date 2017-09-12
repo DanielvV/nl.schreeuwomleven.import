@@ -24,7 +24,7 @@ class CRM_SolImport_Config {
   public function __construct() {
 
     $this->_groupIds['BRS'] = $this->getGroupIdFromName("Beursmedewerkers");
-    $this->_groupIds['ORD'] = $this->getGroupIdFromName("Marsmedewerkers (ordedienst en ehbo)");
+    $this->_groupIds['ORD'] = $this->getGroupIdFromName("Marsmedewerkers");
     $this->_groupIds['WAK'] = $this->getGroupIdFromName("Wakers");
 
     $this->_groupIds['HUL'] = $this->getGroupIdFromName("Hulpverleners");
