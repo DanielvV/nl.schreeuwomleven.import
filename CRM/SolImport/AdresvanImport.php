@@ -14,7 +14,7 @@ class CRM_SolImport_AdresvanImport extends CRM_SolImport_AbstractImport {
   function process() {
     $Adresvan = $this->_sourceData->Adresvan;
 
-    if (empty($Adresvan)) {
+    if (empty($Adresvan) || $Adresvan == 0) {
       return TRUE;
     }
 
