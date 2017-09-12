@@ -25,9 +25,12 @@ class CRM_SolImport_AdresvanImport extends CRM_SolImport_AbstractImport {
       return FALSE;
     }
 
-    $config = CRM_SolImport_Config::singleton();
+    $id = $this->getAddressId($this->contactId);
+    $master_id = $this->getAddressId($Adresvan);
 
-    $this->addAddressConnection($Adresvan);
+    if (!empty($id) && !empty($master_id)) {
+      $this->addAddressConnection($id, $master_id);
+    }
 
     return TRUE;
   }
@@ -46,13 +49,13 @@ class CRM_SolImport_AdresvanImport extends CRM_SolImport_AbstractImport {
     return $result['values'][$contactId]['address_id'];
   }
 
-  private function addAddressConnection($addressMasterContactId) {
+  private function addAddressConnection($id, $master_id) {
 
     $result = civicrm_api3('Address', 'create', [
       'contact_id' => $this->contactId,
       'location_type_id' => "Billing",
-      'id' => $this->getAddressId($this->contactId),
-      'master_id' => $this->getAddressId($addressMasterContactId),
+      'id' => $id,
+      'master_id' => $master_id,
     ]);
     if ($result['is_error']) {
       $this->_logger->logMessage('E', "unable to add address connection from " . $addressMasterContactId . " to " . $this->_sourceData->Contactnummer);
@@ -62,3 +65,4 @@ class CRM_SolImport_AdresvanImport extends CRM_SolImport_AbstractImport {
   }
 
 }
+
