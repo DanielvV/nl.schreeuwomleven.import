@@ -75,6 +75,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         case 'KDI':
         case 'KER':
         case 'KOR':
+        case 'KVG':
           $this->addGroup('SYE');
           break 2;
         case 'SY1':
