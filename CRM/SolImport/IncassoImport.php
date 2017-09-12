@@ -95,7 +95,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'entity_table' => "civicrm_contribution_recur",
       'entity_id' => $this->recurId,
       'date' => $source->DtOfSgntr,
-      'creditor_id' => 1,
+      'creditor_id' => 2,
       'contact_id' => $this->contactId,
       'iban' => $source->iban,
       'type' => "RCUR",
