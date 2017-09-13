@@ -4,7 +4,7 @@ create table sol_import_incasso(
   financial_type_id     varchar(40)  ,
   contact_id            varchar(14)  ,
   frequency_interval    int(11)      ,
-  amount                int(11)      ,
+  amount                varchar(11)  ,
   start_date            date         ,
   DtOfSgntr             date         ,
   MndtId                varchar(40)  ,
