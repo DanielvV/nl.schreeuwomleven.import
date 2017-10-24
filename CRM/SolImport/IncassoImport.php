@@ -97,6 +97,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'date' => $source->DtOfSgntr,
       'creditor_id' => 2,
       'contact_id' => $this->contactId,
+      'account_holder' => $source->account_holder,
       'iban' => $source->iban,
       'type' => "RCUR",
       'status' => "RCUR",
@@ -104,7 +105,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'validation_date' => $source->DtOfSgntr,
     ]);
     if ($result['is_error']) {
-      $this->_logger->logMessage('E', "unable to add mandate from recurring contribution " . $recurId . " to " . $this->_sourceData->contact_id);
+      $this->_logger->logMessage('E', "unable to add mandate from recurring contribution " . $this->$recurId . " to " . $this->_sourceData->contact_id);
       $this->_logger->logMessage('E', print_r($result, TRUE));
       return FALSE;
     }
@@ -113,13 +114,13 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
   private function createMandateOoff($source) {
 
     $result = civicrm_api3('SepaMandate', 'create', [
-      'entity_table' => 'civicrm_contribution_',
+      'entity_table' => 'civicrm_contribution',
       'entity_id' => $source->id,
       'type' => 'OOFF',
       'contact_id' => $source->contact_id,
     ]);
     if ($result['is_error']) {
-      $this->_logger->logMessage('E', "unable to add mandate from recurring contribution " . $recurId . " to " . $this->_sourceData->contact_id);
+      $this->_logger->logMessage('E', "unable to add mandate for contribution to " . $this->_sourceData->contact_id);
       $this->_logger->logMessage('E', print_r($result, TRUE));
       return FALSE;
     }
