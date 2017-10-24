@@ -10,5 +10,6 @@ create table sol_import_incasso(
   MndtId                varchar(40)  ,
   next_sched_contribution_date  date ,
   iban                  varchar(40)  ,
+  account_holder        varchar(128) ,
   note                  varchar(50)
 )
