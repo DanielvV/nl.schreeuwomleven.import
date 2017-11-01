@@ -66,8 +66,8 @@ function civicrm_api3_sol_import_Incasso($params) {
     ));
     while ($extraDaoSource->fetch()) {
       // -> Maak een mandaat aan
-      $extraIncassoImport = new CRM_SolImport_IncassoImport($element, $daoSource, $logger);
-      $result = $incassoImport->processOneOff();
+      $extraIncassoImport = new CRM_SolImport_IncassoImport($element, $extraDaoSource, $logger);
+      $result = $extraIncassoImport->processOneOff();
     }
   }
   // deze api vind zichtzelf altijd succesvol
