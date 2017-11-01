@@ -77,6 +77,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'create_date' => $source->DtOfSgntr,
       'modified_date' => $source->DtOfSgntr,
       'contribution_status_id' => "Pending",
+      'cycle_day' => 26,
       'financial_type_id' => $source->financial_type_id,
       'payment_instrument_id' => "RCUR",
     ]);
