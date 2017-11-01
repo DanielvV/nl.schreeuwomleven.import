@@ -117,7 +117,7 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'entity_table' => 'civicrm_contribution',
       'entity_id' => $source->id,
       'type' => 'OOFF',
-      'status' => 'OOFF',
+      'status' => 'SENT',
       'contact_id' => $source->contact_id,
     ]);
     if ($result['is_error']) {
