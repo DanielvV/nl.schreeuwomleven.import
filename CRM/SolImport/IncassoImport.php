@@ -78,7 +78,8 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
       'modified_date' => $source->DtOfSgntr,
       'contribution_status_id' => "Pending",
       'cycle_day' => 26,
-      'next_sched_contribution_date' => $source->next_sched_contribution_date,
+// not yet implemented in CiviBanking
+//      'next_sched_contribution_date' => $source->next_sched_contribution_date,
       'financial_type_id' => $source->financial_type_id,
       'payment_instrument_id' => "RCUR",
     ]);
