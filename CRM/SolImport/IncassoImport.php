@@ -68,14 +68,17 @@ class CRM_SolImport_IncassoImport extends CRM_SolImport_AbstractImport {
   }
 
   private function createRecur($source) {
+    //hack: put start/create/modified date 10 years before next scheduled contribution date 
+    $startdate = date("Y-m-d", strtotime("-10 year", $source->next_sched_contribution_date));
+
     $result = civicrm_api3('ContributionRecur', 'create', [
       'contact_id' => $this->contactId,
       'amount' => $source->amount,
       'frequency_unit' => "month",
       'frequency_interval' => $source->frequency_interval,
-      'start_date' => $source->start_date,
-      'create_date' => $source->DtOfSgntr,
-      'modified_date' => $source->DtOfSgntr,
+      'start_date' => $startdate,
+      'create_date' => $startdate,
+      'modified_date' => $startdate,
       'contribution_status_id' => "Pending",
       'cycle_day' => 26,
 // not yet implemented in CiviBanking
