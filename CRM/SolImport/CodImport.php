@@ -88,6 +88,7 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         case 'SYH':
           $this->removeGroup('SYM');
           $this->removeGroup('SY1');
+          $this->setSource('Vigilant extra');
           break 2;
       }
     }
@@ -242,6 +243,21 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         return FALSE;
       }
     }
+  }
+
+  private function setSource($source) {
+  // change contact source
+
+    $result = civicrm_api3('Contact', 'create', [
+      'id' => $this->contactId,
+      'source' => $source,
+    ]);
+
+    if ($result['is_error']) {
+      $this->_logger->logMessage('E', "unable change source to " . $source . " for " . $this->_sourceData->Contactnummer);
+      $this->_logger->logMessage('E', print_r($result, TRUE));
+      return FALSE;
+    }  
   }
 
   private function setDeceased($is_deceased) {
