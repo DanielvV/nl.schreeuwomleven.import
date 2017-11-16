@@ -33,6 +33,15 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
         case 'ART':
           $this->addGroup('SYM');
           break;
+        case 'BED':
+          $this->addGroup('SY1');
+          break;
+        case 'KDI':
+        case 'KER':
+        case 'KOR':
+        case 'KVG':
+          $this->addGroup('SYE');
+          break;
         case 'PER':
           $this->addGroup('SYM');
           $this->addGroup('SYE');
@@ -72,16 +81,13 @@ class CRM_SolImport_CodImport extends CRM_SolImport_AbstractImport {
     foreach ($codes as $code) {
       switch ($code) {
         case 'SYM':
-        case 'KDI':
-        case 'KER':
-        case 'KOR':
-        case 'KVG':
+          $this->removeGroup('SY1');
           $this->addGroup('SYE');
           break 2;
         case 'SY1':
         case 'SYA':
-          $this->addGroup('SYE');
           $this->removeGroup('SYM');
+          $this->addGroup('SYE');
           break 2;
         case 'SSE':
         case 'SYE':
